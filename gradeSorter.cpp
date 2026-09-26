@@ -1,6 +1,7 @@
 //COMSC-210 | Lab 13 | Eric-Giulio Hedes
 #include <iomanip>
 #include <iostream>
+#include <array>
 #include <fstream>
 using namespace std;
 
