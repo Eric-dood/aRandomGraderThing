@@ -41,12 +41,15 @@ int main()
     {
         while (fin >> i)
         {
-            fin.ignore();
-            fin >> g;
+            fin.ignore(); //Add the student id (uses ignore() because the while loop already got it in)
+            fin >> g; //Add the grade
+            //Add the elements to the array of structs
             list[arrSize].id = i;
             list[arrSize].grade = g;
-            arrSize += 1;
+            //arrSize increases, will be important for printing
+            arrSize++;
         }
+        //Print out a message about reading student records
         cout << "Read " << arrSize << " student records." << endl;
     }
     else //Otherwise print a error message and set failed to true
@@ -71,8 +74,9 @@ int main()
     }
     fout.close();
     
-    //Print out the results
+    //Sort the array by grade to properly calculate the median
     selectionSort(list, SIZE, true);
+    //Print out the results
     results(list, SIZE);
 }
 //End of main()
@@ -114,15 +118,15 @@ void results(Student s[], int size = SIZE)
         //Find the mean
         mean += s[i].grade;
         //Find the median
-        if ((size % 2) != 0)
+        if ((size % 2) != 0) //If the array size is odd
         {
             medianNum = s[size / 2].grade;
             median = s[size / 2];
         }
-        else
+        else //If the array size is even
         {
-            median = s[(size / 2) - 1];
-            median2 = s[size / 2];
+            median = s[(int)((size / 2) - 1)];
+            median2 = s[(int)size / 2];
             medianNum = (median.grade + median2.grade) / 2;
         }
         
@@ -132,8 +136,10 @@ void results(Student s[], int size = SIZE)
     //Find the standard deviation
     for (int i = 0; i < size; i++)
         standard += pow(s[i].grade - mean, 2);
+    //Use sqrt() and divide standard by size to find the actual standard deviation
     double standardDeviation = sqrt(standard / size);
 
+    //Print the summary statistics
     cout << endl << "-------- Summary Statistics --------" << endl;
     cout << "Minimum Score: " << smallest.grade << " (Student ID: " << smallest.id << ")" << endl;
     cout << "Maximum Score: " << largest.grade << " (Student ID: " << largest.id << ")" << endl;
