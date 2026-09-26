@@ -4,13 +4,16 @@
 #include <fstream>
 using namespace std;
 
-struct Student
+class Student
 {
     int id;
     double grade;
+
+    public:
+    void output();
 };
 
 int main()
 {
-    
+
 }
