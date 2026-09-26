@@ -16,7 +16,7 @@ struct Student
 
 //Prototype functions
 void selectionSort(Student *s, int size);
-void results(Student s[]);
+void results(Student s[], int size);
 
 //Start of main()
 int main()
@@ -71,7 +71,7 @@ int main()
     }
 
     //Print out the results
-    results(list);
+    results(list, SIZE);
 }
 //End of main()
 
@@ -82,7 +82,7 @@ void selectionSort(Student *s, int size)
     for (int i = 0; i < size-1; i++)
     {
         //Temporary variable for storing the smallest variable
-        int smallest = 0;
+        int smallest = i;
         //Do another ranged loop for the smallest value checks
         for (int j = i + 1; j < size; j++)
         {
@@ -99,12 +99,17 @@ void selectionSort(Student *s, int size)
 }
 
 //Define results()
-void results(Student s[])
+void results(Student s[], int size)
 {
-    double minGrade = min(s[0].grade, s[SIZE-1].grade);
-    double maxGrade = max(s[0].grade, s[SIZE-1].grade);
+    Student smallest = s[0], largest = s[0];
+    //Find the smallest & largest grades
+    for (int i = 0; i < size - 1; i++)
+    {
+        if (s[i].grade < smallest.grade) smallest = s[i];
+        if (s[i].grade > largest.grade) largest = s[i];
+    }
 
     cout << endl << "-------- Summary Statistics --------" << endl;
-    cout << "Minimum Score: " << minGrade << " (Student ID: " << endl;
-    cout << "Maximum Score: " << maxGrade << " (Student ID: " << endl;
+    cout << "Minimum Score: " << smallest.grade << " (Student ID: " << smallest.id << ")" << endl;
+    cout << "Maximum Score: " << largest.grade << " (Student ID: " << largest.id << ")" << endl;
 }
