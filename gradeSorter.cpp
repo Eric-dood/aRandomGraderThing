@@ -1,7 +1,6 @@
 //COMSC-210 | Lab 13 | Eric-Giulio Hedes
 #include <iomanip>
 #include <iostream>
-#include <array>
 #include <fstream>
 using namespace std;
 
@@ -20,7 +19,7 @@ int main()
     int arrSize = 0;
     int i = 0; //Stores id
     double g = 0; //Stores grade
-    array<Student, SIZE> list;
+    Student list[SIZE];
     
     ifstream fin;
     ofstream fout;
@@ -37,9 +36,21 @@ int main()
             arrSize += 1;
         }
     }
+
+    selectionSort(list, SIZE);
 }
 
 void selectionSort(Student *s, int size)
 {
+    for (int i = 0; i < SIZE-1; i++)
+    {
+        int smallest = 0;
+        for (int j = i + 1; j < SIZE; j++)
+        {
+            if (s[j].id < s[smallest].id)
+                smallest = j;
+        }
 
+        swap(s[i], s[smallest]);
+    }
 }
