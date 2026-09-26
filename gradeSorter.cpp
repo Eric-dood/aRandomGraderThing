@@ -101,15 +101,25 @@ void selectionSort(Student *s, int size)
 //Define results()
 void results(Student s[], int size)
 {
-    Student smallest = s[0], largest = s[0];
-    //Find the smallest & largest grades
-    for (int i = 0; i < size - 1; i++)
+    Student smallest = s[0], largest = s[0], median = s[0];
+    double mean;
+    for (int i = 0; i < size; i++)
     {
+        //Find the smallest grade
         if (s[i].grade < smallest.grade) smallest = s[i];
+        //Find the largest grade
         if (s[i].grade > largest.grade) largest = s[i];
+        //Find the mean
+        mean += s[i].grade;
+        //Find the median
+        if (i == (SIZE + 2) / 2) median = s[i];
     }
+    //Divide the mean by the size itself
+    mean /= SIZE;
 
     cout << endl << "-------- Summary Statistics --------" << endl;
     cout << "Minimum Score: " << smallest.grade << " (Student ID: " << smallest.id << ")" << endl;
     cout << "Maximum Score: " << largest.grade << " (Student ID: " << largest.id << ")" << endl;
+    cout << "Mean Score: " << mean << endl;
+    cout << "Median Score: " << median.grade << " (Student ID: " << median.id << ")" << endl;
 }
