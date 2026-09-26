@@ -15,7 +15,7 @@ struct Student
 };
 
 //Prototype functions
-void selectionSort(Student *s, int size);
+void selectionSort(Student *s, int size, bool grades);
 void results(Student s[], int size);
 
 //Start of main()
@@ -59,7 +59,7 @@ int main()
     if (!failed)
     {
         //Sort the list by using selectionSort()
-        selectionSort(list, SIZE);
+        selectionSort(list, SIZE, false);
 
         //Open the output file
         string outputFile = "210-lab-13-grades-sorted.txt";
@@ -72,12 +72,13 @@ int main()
     fout.close();
     
     //Print out the results
+    selectionSort(list, SIZE, true);
     results(list, SIZE);
 }
 //End of main()
 
 //Define selectionSort()
-void selectionSort(Student *s, int size)
+void selectionSort(Student *s, int size, bool grades)
 {
     //Do a ranged loop based on the size
     for (int i = 0; i < size-1; i++)
@@ -88,7 +89,7 @@ void selectionSort(Student *s, int size)
         for (int j = i + 1; j < size; j++)
         {
             //If there is a number smaller than the smallest, set the smallest number
-            if (s[j].id < s[smallest].id)
+            if ((grades) ? (s[j].grade < s[smallest].grade) : (s[j].id < s[smallest].id))
                 smallest = j;
         }
 
@@ -102,9 +103,8 @@ void selectionSort(Student *s, int size)
 //Define results()
 void results(Student s[], int size = SIZE)
 {
-    Student smallest = s[0], largest = s[0];
-    double mean = 0, medianBase[size], standard = 0;
-    int medianNum = 0;
+    Student smallest = s[0], largest = s[0], median = s[0], median2 = s[0];
+    double mean = 0, standard = 0, medianNum = 0;
     for (int i = 0; i < size; i++)
     {
         //Find the smallest grade
@@ -114,8 +114,18 @@ void results(Student s[], int size = SIZE)
         //Find the mean
         mean += s[i].grade;
         //Find the median
-        if ((size % 2) != 0) medianNum = s[i].grade;
-        else medianNum = (s[(size - 1) / 2].grade + s[size / 2].grade) / 2;
+        if ((size % 2) != 0)
+        {
+            medianNum = s[size / 2].grade;
+            median = s[size / 2];
+        }
+        else
+        {
+            median = s[(size - 1) / 2];
+            median2 = s[size / 2];
+            medianNum = (median.grade + median2.grade) / 2;
+        }
+        
     }
     //Divide the mean by the size itself
     mean /= size;
@@ -128,6 +138,6 @@ void results(Student s[], int size = SIZE)
     cout << "Minimum Score: " << smallest.grade << " (Student ID: " << smallest.id << ")" << endl;
     cout << "Maximum Score: " << largest.grade << " (Student ID: " << largest.id << ")" << endl;
     cout << "Mean Score: " << mean << endl;
-    cout << "Median Score: " << medianNum << " (Student ID: " << s[medianNum].id << ")" << endl;
+    cout << "Median Score: " << medianNum << " (Student ID: " << median.id << ")" << endl;
     cout << "Standard Deviation: " << standardDeviation << endl;
 }
