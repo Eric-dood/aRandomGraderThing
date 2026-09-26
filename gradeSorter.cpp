@@ -16,6 +16,7 @@ struct Student
 
 //Prototype functions
 void selectionSort(Student *s, int size);
+void results(Student s[]);
 
 //Start of main()
 int main()
@@ -46,6 +47,7 @@ int main()
             list[arrSize].grade = g;
             arrSize += 1;
         }
+        cout << "Read " << arrSize << " student records." << endl;
     }
     else //Otherwise print a error message and set failed to true
     {
@@ -60,11 +62,16 @@ int main()
         selectionSort(list, SIZE);
 
         //Open the output file
-        fout.open("210-lab-13-grades-sorted.txt");
+        string outputFile = "210-lab-13-grades-sorted.txt";
+        fout.open(outputFile);
         //Sort the output file by Student IDs
         for (int i = 0; i < SIZE; i++)
             fout << list[i].id << " " << list[i].grade << endl;
+        cout << "Sorted results written to: '" << outputFile << "'" << endl;
     }
+
+    //Print out the results
+    results(list);
 }
 //End of main()
 
@@ -84,7 +91,20 @@ void selectionSort(Student *s, int size)
                 smallest = j;
         }
 
-        //Use the swap() function for swapping the whole struct (+ less clutter!)
-        swap(s[i], s[smallest]);
+        //Sort the struct elements by Student ID manually
+        Student temp = s[i];
+        s[i] = s[smallest];
+        s[smallest] = temp;
     }
+}
+
+//Define results()
+void results(Student s[])
+{
+    double minGrade = min(s[0].grade, s[SIZE-1].grade);
+    double maxGrade = max(s[0].grade, s[SIZE-1].grade);
+
+    cout << endl << "-------- Summary Statistics --------" << endl;
+    cout << "Minimum Score: " << minGrade << " (Student ID: " << endl;
+    cout << "Maximum Score: " << maxGrade << " (Student ID: " << endl;
 }
