@@ -121,7 +121,7 @@ void results(Student s[], int size = SIZE)
         }
         else
         {
-            median = s[(size - 1) / 2];
+            median = s[(size / 2) - 1];
             median2 = s[size / 2];
             medianNum = (median.grade + median2.grade) / 2;
         }
